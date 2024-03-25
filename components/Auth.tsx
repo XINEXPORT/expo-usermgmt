@@ -12,12 +12,12 @@ AppState.addEventListener('change', (state) => {
   }
 })
 
-export default function Auth() {
+const Auth = ()=> {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
 
-  async function signInWithEmail() {
+const signInWithEmail =async()=> {
     setLoading(true)
     const { error } = await supabase.auth.signInWithPassword({
       email: email,
@@ -28,7 +28,7 @@ export default function Auth() {
     setLoading(false)
   }
 
-  async function signUpWithEmail() {
+const signUpWithEmail = async()=> {
     setLoading(true)
     const {
       data: { session },
@@ -38,9 +38,14 @@ export default function Auth() {
       password: password,
     })
 
-    if (error) Alert.alert(error.message)
-    if (!session) Alert.alert('Please check your inbox for email verification!')
-    setLoading(false)
+    if (error) {
+        Alert.alert(error.message)
+        console.log(error)
+    }
+    if (!session) {
+        Alert.alert('Please check your inbox for email verification!')
+        setLoading(false)
+    }
   }
 
   return (
@@ -90,3 +95,5 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 })
+
+export default Auth
